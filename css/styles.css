@@ -1,0 +1,113 @@
+.clock {
+    position: relative;
+    width: 50vw;
+    height: 50vw;
+    border: 1vw solid black;
+    border-radius: 50%;
+    margin: auto;
+}
+
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    width: 50%;
+    background: black;
+    transform-origin: 0 0;
+}
+
+.hour {
+    width: 12vw;
+    height: 0.6vw;
+}
+
+.minute {
+    width: 15vw;
+    height: 0.5vw;
+}
+
+.second {
+    width: 20vw;
+    height: 0.4vw;
+    background: red;
+}
+
+.mark {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /*text-align: center;*/
+    /*transform-origin: center;*/
+}
+
+
+.tick {
+    height: 2vw;
+    width: 0.5vw;
+    background: black;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    /*transform: translateX(-50%);*/
+}
+
+.major-tick {
+    height: 4vw; /* 更长的刻度线 */
+    width: 0.7vw; /* 更粗的刻度线 */
+    background: black;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    /*transform: translateX(-50%);*/
+}
+
+.number {
+    font-size: 4.5vw;
+    position: absolute;
+    top: 4vw;
+    left: 50%;
+    /*transform: translateX(-50%) rotateZ(0deg);*/
+    /*transform-origin: 50% 50%;*/
+}
+
+
+/*******************************footer*********************************/
+.footer {
+    width: 100vw;
+    height: 14vw;
+    border-top: solid 1px #DDD;
+    background-color: #fff;
+
+    position: fixed;
+    left: 0;
+    bottom: 0;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    padding: 0 0;
+}
+
+.footer li{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: #999;
+    user-select: none;
+    cursor: pointer;
+}
+
+.footer li p{
+    font-size: 2.1vw;
+    margin-top: 0;
+}
+
+.footer li img{
+    width: 3.5vw;
+    height: 3.5vw;
+
+    margin-top: 1vw;
+}
