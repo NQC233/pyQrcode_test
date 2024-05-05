@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>alarm</title>
+    <link rel="stylesheet" href="css/alarm.css">
+    <script src="js/alarm.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="add_alarm_clock" id="setAlarm">
+            <img src="images/add.png" alt="">
+        </div>
+<!--        闹钟设定对话框-->
+        <div class="alarmDialog" style="display: none">
+            <label for="alarmDateTime">选择时间</label>
+            <input type="datetime-local" id="alarmDateTime">
+            <button id="saveAlarm">保存</button>
+        </div>
+    </div>
+
+    <ul id="alarmList"></ul>
+    <audio id="alarmSound" src="alarm.mp3"></audio>
+
+    <ul class="footer">
+        <li onclick="location.href='index.html'">
+            <img src="images/earth.png" alt="">
+            <p>时钟</p>
+        </li>
+       <li onclick="location.href='alarm.html'">
+            <img src="images/alarm.png" alt="">
+            <p>闹钟</p>
+        </li>
+    </ul>
+</body>
+</html>

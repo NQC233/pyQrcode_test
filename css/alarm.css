@@ -1,0 +1,63 @@
+.header {
+    width: 100vw;
+    height: 12vw;
+}
+
+.header .add_alarm_clock{
+    position: fixed;
+    right: 2vw;
+}
+
+.header .add_alarm_clock img{
+    width: 5vw;
+    height: 5vw;
+}
+
+#alarmDialog {
+    padding: 20px;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    display: none; /* Initially hidden */
+}
+
+
+/*******************************footer*********************************/
+.footer {
+    width: 100vw;
+    height: 14vw;
+    border-top: solid 1px #DDD;
+    background-color: #fff;
+
+    position: fixed;
+    left: 0;
+    bottom: 0;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    padding: 0 0;
+}
+
+.footer li{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: #999;
+    user-select: none;
+    cursor: pointer;
+}
+
+.footer li p{
+    font-size: 2.1vw;
+    margin-top: 0;
+}
+
+.footer li img{
+    width: 3.5vw;
+    height: 3.5vw;
+
+    margin-top: 1vw;
+}
