@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>alarm</title>
     <link rel="stylesheet" href="css/alarm.css">
-    <script src="js/alarm.js"></script>
+    <link rel="stylesheet" href="css/reset.css">
 </head>
 <body>
     <div class="header">
-        <div class="add_alarm_clock" id="setAlarm">
+        <div id="setAlarm">
             <img src="images/add.png" alt="">
         </div>
 <!--        闹钟设定对话框-->
-        <div class="alarmDialog" style="display: none">
-            <label for="alarmDateTime">选择时间</label>
-            <input type="datetime-local" id="alarmDateTime">
+        <div id="alarmDialog" style="display: none">
+            <label for="alarmTime">选择时间</label>
+            <input type="time" id="alarmTime">
             <button id="saveAlarm">保存</button>
         </div>
     </div>
 
-    <ul id="alarmList"></ul>
+    <ul class="alarmList" id="alarmList"></ul>
     <audio id="alarmSound" src="alarm.mp3"></audio>
 
     <ul class="footer">
@@ -33,5 +33,7 @@
             <p>闹钟</p>
         </li>
     </ul>
+
+    <script src="js/alarm.js"></script>
 </body>
 </html>

@@ -3,25 +3,49 @@
     height: 12vw;
 }
 
-.header .add_alarm_clock{
+.header #setAlarm{
     position: fixed;
     right: 2vw;
 }
 
-.header .add_alarm_clock img{
+.header #setAlarm img{
     width: 5vw;
     height: 5vw;
 }
 
-#alarmDialog {
+.header #alarmDialog {
+    width: 60vw;
+    height: 20vw;
+
+    position: fixed;
+    left: 18%;
+    top: 40%;
     padding: 20px;
     background-color: #f4f4f4;
     border: 1px solid #ccc;
     display: none; /* Initially hidden */
 }
 
+/*****************************闹钟列表部分*****************************************/
 
-/*******************************footer*********************************/
+.alarmList {
+    width: 100vw;
+    padding-bottom: 14vw;
+}
+
+.alarmList li{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 2.5vw;
+    border-bottom: solid 1px #DDD;
+    user-select: none;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+}
+
+/*******************************footer******************************************/
 .footer {
     width: 100vw;
     height: 14vw;

@@ -1,18 +1,23 @@
 document.getElementById('setAlarm').addEventListener('click', function() {
-        document.getElementById('alarmDialog').style.display = 'block';
+    document.getElementById('alarmDialog').style.display = 'block';
 });
 
 document.getElementById('saveAlarm').addEventListener('click', function() {
-    const alarmDateTime = document.getElementById('alarmDateTime').value;
-    if (alarmDateTime) {
-        const alarmDate = new Date(alarmDateTime);
+    const timeValue = document.getElementById('alarmTime').value;
+    if (timeValue) {
+        const now = new Date(); // 获取当前日期和时间
+        const [hours, minutes] = timeValue.split(':').map(Number); // 分解小时和分钟
+        const alarmDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes); // 创建一个新的Date对象，日期为今天，时间为用户选择的时间
+
         alarms.push(alarmDate); // 将新的闹钟时间添加到数组中
 
         const listItem = document.createElement('li');
-        listItem.textContent = "闹钟设定于: " + new Date(alarmDateTime).toLocaleString();
+        const itemText = document.createElement('p')
+        itemText.textContent = alarmDate.getHours().toString().padStart(2, '0') + ":" + alarmDate.getMinutes().toString().padStart(2, '0'); // 使用toLocaleString()显示日期和时间
+        listItem.appendChild(itemText)
         document.getElementById('alarmList').appendChild(listItem);
         document.getElementById('alarmDialog').style.display = 'none';
-        document.getElementById('alarmDateTime').value = '';
+        document.getElementById('alarmTime').value = ''; // 重置时间输入字段
     } else {
         alert("请输入有效的时间");
     }
