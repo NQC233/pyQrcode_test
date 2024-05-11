@@ -1,4 +1,8 @@
-.clock {
+.wrapper {
+    width: 100%;
+    height: 100%;
+}
+.wrapper .clock {
     position: relative;
     width: 50vw;
     height: 50vw;
@@ -7,7 +11,7 @@
     margin: auto;
 }
 
-.hand {
+.wrapper .hand {
     position: absolute;
     bottom: 50%;
     left: 50%;
@@ -16,23 +20,23 @@
     transform-origin: 0 0;
 }
 
-.hour {
+.wrapper .hour {
     width: 12vw;
     height: 0.6vw;
 }
 
-.minute {
+.wrapper .minute {
     width: 15vw;
     height: 0.5vw;
 }
 
-.second {
+.wrapper .second {
     width: 20vw;
     height: 0.4vw;
     background: red;
 }
 
-.mark {
+.wrapper .mark {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -41,7 +45,7 @@
 }
 
 
-.tick {
+.wrapper .tick {
     height: 2vw;
     width: 0.5vw;
     background: black;
@@ -51,7 +55,7 @@
     /*transform: translateX(-50%);*/
 }
 
-.major-tick {
+.wrapper .major-tick {
     height: 4vw; /* 更长的刻度线 */
     width: 0.7vw; /* 更粗的刻度线 */
     background: black;
@@ -61,7 +65,7 @@
     /*transform: translateX(-50%);*/
 }
 
-.number {
+.wrapper .number {
     font-size: 4.5vw;
     position: absolute;
     top: 4vw;
@@ -72,7 +76,7 @@
 
 
 /*******************************footer*********************************/
-.footer {
+.wrapper .footer {
     width: 100vw;
     height: 14vw;
     border-top: solid 1px #DDD;
@@ -89,7 +93,7 @@
     padding: 0 0;
 }
 
-.footer li{
+.wrapper .footer li{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -100,12 +104,12 @@
     cursor: pointer;
 }
 
-.footer li p{
+.wrapper .footer li p{
     font-size: 2.1vw;
     margin-top: 0;
 }
 
-.footer li img{
+.wrapper .footer li img{
     width: 3.5vw;
     height: 3.5vw;
 

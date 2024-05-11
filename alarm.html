@@ -8,32 +8,38 @@
     <link rel="stylesheet" href="css/reset.css">
 </head>
 <body>
-    <div class="header">
-        <div id="setAlarm">
-            <img src="images/add.png" alt="">
+    <div class="wrapper">
+        <div class="header">
+            <h1>
+                闹钟
+            </h1>
+            <div class="setAlarm" id="setAlarm">
+                <img src="images/add.png" alt="">
+            </div>
         </div>
-<!--        闹钟设定对话框-->
-        <div id="alarmDialog" style="display: none">
-            <label for="alarmTime">选择时间</label>
-            <input type="time" id="alarmTime">
+
+        <!--        闹钟设定对话框-->
+        <div id="alarmDialog" class="alarmDialog" style="display: none">
+            <label for="alarmDateTime">选择时间</label>
+            <input type="datetime-local" class="alarmDateTime" id="alarmDateTime" min="2024-5-1T00:00" max="2024-5-31T23:59" />
             <button id="saveAlarm">保存</button>
         </div>
+
+        <ul class="alarmList" id="alarmList"></ul>
+        <audio id="alarmSound" src="alarm.mp3"></audio>
+
+        <ul class="footer">
+            <li onclick="location.href='index.html'">
+                <img src="images/earth.png" alt="">
+                <p>时钟</p>
+            </li>
+           <li onclick="location.href='alarm.html'">
+                <img src="images/alarm.png" alt="">
+                <p>闹钟</p>
+            </li>
+        </ul>
+
     </div>
-
-    <ul class="alarmList" id="alarmList"></ul>
-    <audio id="alarmSound" src="alarm.mp3"></audio>
-
-    <ul class="footer">
-        <li onclick="location.href='index.html'">
-            <img src="images/earth.png" alt="">
-            <p>时钟</p>
-        </li>
-       <li onclick="location.href='alarm.html'">
-            <img src="images/alarm.png" alt="">
-            <p>闹钟</p>
-        </li>
-    </ul>
-
     <script src="js/alarm.js"></script>
 </body>
 </html>
