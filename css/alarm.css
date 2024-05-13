@@ -24,33 +24,179 @@
     width: 10vw;
     height: 10vw;
 }
-
-.wrapper .alarmDialog {
-    width: 80vw;
-    height: 20vw;
+/******************************************** 闹钟设置对话框菜单部分 **********************************************************/
+.wrapper .alarm-dialog {
+    width: 100vw;
+    height: 100%;
 
     position: fixed;
-    top: 40%;
-    left: 8%;
+    box-sizing: border-box;
     padding: 10px;
     background-color: #f4f4f4;
     border: 1px solid #ccc;
     border-radius: 5px;
     display: none; /* Initially hidden */
-    justify-content: center;
+    flex-direction: column;
+}
+
+.wrapper .alarm-dialog .alarm-dialog-header{
+    height: 10vw;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
-.wrapper .alarmDialog .alarmDateTime{
-    width: 30vw;
+.wrapper .alarm-dialog .alarm-dialog-header span{
+    font-size: 5vw;
+    font-weight: 700;
+    color: #888888;
+}
+
+.wrapper .alarm-dialog .alarm-dialog-header span:first-child{
+    font-weight: 500;
+    color: orange;
+}
+
+.wrapper .alarm-dialog .alarm-dialog-header span:last-child{
+    color: orange;
+}
+
+.wrapper .alarm-dialog .select-time{
+    height: 25vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 4vw;
+    margin-bottom: 12vw;
+}
+.wrapper .alarm-dialog .select-time .alarmTime{
+    width: 35vw;
+    height: 6vw;
     background-color: #f2f2f2;
     border: solid 1px #cccccc;
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 8px;
     margin: 0 2vw 0 2vw;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #666;
+    font-size: 3.2vw;
 }
 
+.wrapper .alarm-dialog .select-more li{
+    height: 10vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 1px #DDD;
+    border-top: solid 1px #DDD;
+    font-size: 4vw;
+}
+.wrapper .alarm-dialog .select-more li span:last-child{
+    margin-right: 2vw;
+    color: #888888;
+}
+
+.wrapper .alarm-dialog .select-more li input{
+    text-align: right;
+    margin-right: 2vw;
+    border: none;
+    outline: none;
+    padding: 0;
+    background-color: #f4f4f4;
+    font-size: 4vw;
+    color: #888888;
+}
+
+/*闹钟编辑部分专有的删除按钮*/
+.wrapper .alarm-dialog button{
+    width: 100%;
+    height: 12vw;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    background-color: lightpink;
+    color: red;
+    font-size: 4vw;
+    margin-top: 4vw;
+}
+/***************************** 重复对话框部分**************************************/
+.wrapper .repetition-dialog {
+    width: 100vw;
+    height: 100%;
+
+    position: fixed;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: none; /* Initially hidden */
+    flex-direction: column;
+}
+
+.wrapper .repetition-dialog .repetition-dialog-header{
+    height: 10vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4vw;
+}
+
+.wrapper .repetition-dialog .repetition-dialog-header span{
+    font-size: 5vw;
+    font-weight: 700;
+    color: #888888;
+}
+
+.wrapper .repetition-dialog .repetition-dialog-header span:first-child{
+    font-weight: 500;
+    color: orange;
+}
+
+.wrapper .repetition-dialog .repetition-dialog-header span:last-child{
+    color: orange;
+}
+/************************************* 重复对话框的复选框部分*****************************************************/
+.wrapper .repetition-dialog .repetition-type{
+    width: 100%;
+}
+
+.wrapper .repetition-dialog .repetition-type input[type="checkbox"] {
+    display: none;
+}
+
+/* 自定义复选框样式 */
+.wrapper .repetition-dialog .repetition-type input[type="checkbox"] + label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.wrapper .repetition-dialog .repetition-type input[type="checkbox"] + label:before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent; /* 将边框设为透明 */
+    border-radius: 3px;
+}
+
+.wrapper .repetition-dialog .repetition-type input[type="checkbox"]:checked + label:before {
+    content: '✔';
+    font-size: 16px;
+    color: orange;
+    line-height: 20px;
+    text-align: center;
+}
+
+.wrapper .repetition-dialog .repetition-type input[type="checkbox"] + label span {
+    order: 1; /* 调整文本的位置 */
+}
+
+.wrapper .repetition-dialog .repetition-type input[type="checkbox"] + label:before {
+    order: 2; /* 调整勾选框的位置 */
+}
 /*****************************闹钟列表部分*****************************************/
 
 .wrapper .alarmList {
@@ -70,22 +216,20 @@
 
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .wrapper .alarmList li .hourMinute {
     font-size: 7vw;
 }
 
-.wrapper .alarmList li .monthDay {
-    font-size: 3vw;
-    color: #DDDDDD;
+.wrapper .alarmList li .alarm-detail {
+    font-size: 3.2vw;
+    color: #999;
 }
 
 .wrapper .alarmList li button{
-    position: relative;
-    left: 50vw;
-
-    background-color: rgb(32, 93, 224);
+    background-color: #007AFF;
     border: none;
     font-size: 3vw;
     text-align: center;
@@ -95,7 +239,7 @@
     text-decoration: none;
     overflow: hidden;
     cursor: pointer;
-
+    border-radius: 16px;
 }
 /*******************************footer******************************************/
 .wrapper .footer {

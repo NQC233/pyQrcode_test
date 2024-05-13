@@ -18,15 +18,78 @@
             </div>
         </div>
 
-        <!--        闹钟设定对话框-->
-        <div id="alarmDialog" class="alarmDialog" style="display: none">
-            <label for="alarmDateTime">选择时间</label>
-            <input type="datetime-local" class="alarmDateTime" id="alarmDateTime" min="2024-5-1T00:00" max="2024-5-31T23:59" />
-            <button id="saveAlarm">保存</button>
-        </div>
-
         <ul class="alarmList" id="alarmList"></ul>
         <audio id="alarmSound" src="alarm.mp3"></audio>
+
+        <!--        闹钟设定对话框-->
+        <div id="alarm-dialog" class="alarm-dialog" style="display: none">
+            <div class="alarm-dialog-header">
+                <span id="alarm-dialog-return">返回</span>
+                <span>添加闹钟</span>
+                <span id="saveAlarm">保存</span>
+            </div>
+
+            <div class="select-time">
+                <label><input type="time" class="alarmTime" id="alarmTime"/></label>
+            </div>
+
+            <ul class="select-more">
+                <li class="select-repetition" id="select-repetition">
+                    <span>重复</span>
+                    <span id="repetition-result">永不</span>
+                </li>
+                <li class="select-label">
+                    <span>标签</span>
+                    <label><input type="text" id="select-label-result" value="闹钟"></label>
+                </li>
+            </ul>
+        </div>
+
+<!--        闹钟编辑对话框-->
+        <div id="edit-alarm-dialog" class="alarm-dialog" style="display: none">
+            <div class="alarm-dialog-header">
+                <span id="edit-alarm-dialog-return">返回</span>
+                <span>编辑闹钟</span>
+                <span id="edit-save-alarm">保存</span>
+            </div>
+
+            <div class="select-time">
+                <label><input type="time" class="alarmTime" id="edit-alarmTime"/></label>
+            </div>
+
+            <ul class="select-more">
+                <li class="select-repetition" id="edit-select-repetition">
+                    <span>重复</span>
+                    <span id="edit-repetition-result">永不</span>
+                </li>
+                <li class="select-label">
+                    <span>标签</span>
+                    <label><input type="text" id="edit-select-label-result" value="闹钟"></label>
+                </li>
+            </ul>
+
+            <button>删除闹钟</button>
+        </div>
+
+<!--        设置重复类型对话框-->
+        <div class="repetition-dialog" id="repetition-dialog" style="display: none">
+            <div class="repetition-dialog-header">
+                <span id="repetition-dialog-return">返回</span>
+                <span>重复</span>
+                <span id="save-repetition"></span>
+            </div>
+
+            <div class="repetition-type" id="repetition-type">
+                <input type="checkbox" id="Monday" value="1"><label for="Monday">每周一</label><br>
+                <input type="checkbox" id="Tuesday" value="2"><label for="Tuesday">每周二</label><br>
+                <input type="checkbox" id="Wednesday" value="3"><label for="Wednesday">每周三</label><br>
+                <input type="checkbox" id="Thursday" value="4"><label for="Thursday">每周四</label><br>
+                <input type="checkbox" id="Friday" value="5"><label for="Friday">每周五</label><br>
+                <input type="checkbox" id="Saturday" value="6"><label for="Saturday">每周六</label><br>
+                <input type="checkbox" id="Sunday" value="0"><label for="Sunday">每周日</label><br>
+            </div>
+
+        </div>
 
         <ul class="footer">
             <li onclick="location.href='index.html'">
