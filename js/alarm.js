@@ -1,6 +1,67 @@
-const alarms = []; // 存储所有闹钟时间的数组
+let alarms = {}; // 存储所有闹钟时间的哈希表
 let repeatDays = []; // 存储用户选择的重复日期
 let now_alarm_index; // 表示当前只在访问的闹钟的下标
+let alarm_id = 0; // 总体alarms的id，是自增的
+
+// ********************************** 检查本地存储，并恢复数据********************************************************
+// 恢复闹钟数据到 ul 元素中的函数
+function restoreAlarms() {
+    const alarmList = document.getElementById('alarmList');
+
+    // 检查本地存储中是否存在 alarms 数据
+    const storedAlarms = localStorage.getItem('alarms');
+    if (storedAlarms) {
+
+        alarms = JSON.parse(storedAlarms);
+        alarm_id = JSON.parse(localStorage.getItem('alarm_id'));
+
+        // 遍历 alarms 对象，将每个闹钟数据恢复到 ul 元素中
+        Object.values(alarms).forEach(alarm => {
+            const listItem = document.createElement('li');
+            listItem.setAttribute('data-index', alarm.id);
+
+            // 原本是对象，但是从本地储存恢复后变成了字符串
+            alarm.date = new Date(alarm.date);
+
+            const toggleButton = document.createElement('button');
+            toggleButton.textContent = alarm.enabled ? '开' : '关';
+            toggleButton.onclick = function() {
+                alarm.enabled = !alarm.enabled;
+                toggleButton.textContent = alarm.enabled ? '开' : '关';
+                event.stopPropagation();
+            };
+
+            let recoverRepetition;
+            if (alarm.repeat.length === 0) {
+                recoverRepetition = '永不';
+            } else if (alarm.repeat.length === 7){
+                recoverRepetition = '每天';
+            } else{
+                const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+                const sortedDays = alarm.repeat.sort((a, b) => a - b);
+                recoverRepetition = sortedDays.map(day => weekdays[day]).join('、');
+            }
+
+            console.log(alarm);
+            const alarmInfo = document.createElement('div');
+            const hourMinuteText = document.createElement('p');
+            const alarmDetail = document.createElement('p');
+            hourMinuteText.className = 'hourMinute';
+            alarmDetail.className = 'alarm-detail';
+            hourMinuteText.textContent = alarm.date.getHours().toString().padStart(2, '0') + ":" + alarm.date.getMinutes().toString().padStart(2, '0');
+            alarmDetail.textContent = alarm.label + '，' + recoverRepetition;
+            alarmInfo.appendChild(hourMinuteText);
+            alarmInfo.appendChild(alarmDetail);
+            listItem.appendChild(alarmInfo);
+            listItem.appendChild(toggleButton);
+
+            alarmList.appendChild(listItem);
+        });
+    }
+}
+
+// 调用函数，恢复闹钟数据到 ul 元素中
+restoreAlarms();
 
 // ******************************* 添加闹钟 *******************************
 document.getElementById('setAlarm').addEventListener('click', function() {
@@ -25,11 +86,11 @@ document.getElementById('saveAlarm').addEventListener('click', function() {
     if (alarmTime) {
         const now = new Date();
         const inputTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), alarmTime.split(":")[0], alarmTime.split(":")[1]);
-
+        console.log('ok')
         // 对输入时间进行修正
         if (repeatDays.length === 0 && inputTime < now){
             inputTime.setDate(now.getDate() + 1);
-        }else{
+        }else if (repeatDays.length !== 0){
             let nextAlarmDate = inputTime;
             while (!repeatDays.includes(nextAlarmDate.getDay()) || inputTime < now) {
                 nextAlarmDate.setDate(nextAlarmDate.getDate() + 1);
@@ -37,21 +98,23 @@ document.getElementById('saveAlarm').addEventListener('click', function() {
         }
 
         const alarm = {
+            id: alarm_id,
             date: inputTime,
             repeat: repeatDays,
             label: "",
             enabled: true
         };
-
+        console.log('ok')
         const listItem = document.createElement('li');
-        // 给每个列表项分配一个属性，用于与其在alarms中的下标绑定，便于编辑操作
-        listItem.setAttribute('data-index', alarms.length + "");
+        // 给每个列表项分配一个属性，用于与其在alarms绑定，便于编辑操作
+        listItem.setAttribute('data-index', alarm_id + "");
+        alarm_id++;
         const toggleButton = document.createElement('button');
         toggleButton.textContent = '开';
         toggleButton.onclick = function() {
             alarm.enabled = !alarm.enabled;
             toggleButton.textContent = alarm.enabled ? '开' : '关';
-            return false;
+            event.stopPropagation();
         };
         const alarmInfo = document.createElement('div');
         const hourMinuteText = document.createElement('p');
@@ -70,12 +133,14 @@ document.getElementById('saveAlarm').addEventListener('click', function() {
         listItem.appendChild(toggleButton);
         document.getElementById('alarmList').appendChild(listItem);
 
-        // 先等labelResult这个元素得到后，设置好alarm的label属性再添加值数组中
-        alarms.push(alarm);
+        // 先等labelResult这个元素得到后，设置好alarm的label属性再添加值哈希表中
+        alarms[alarm.id] = alarm;
+        console.log(alarm);
+        // 更新本地存储中的数据
+        localStorage.setItem('alarms', JSON.stringify(alarms));
+        localStorage.setItem('alarm_id', JSON.stringify(alarm_id));
 
         // 复原
-        console.log('ok')
-
         document.getElementById('alarm-dialog').style.display = 'none';
         document.getElementById('alarmTime').value = '';
         repeatDays = []
@@ -139,7 +204,7 @@ document.getElementById('edit-save-alarm').addEventListener('click', function ()
         // 对输入时间进行修正
         if (repeatDays.length === 0 && inputTime < now) {
             inputTime.setDate(now.getDate() + 1);
-        } else {
+        } else if (repeatDays.length !== 0){
             let nextAlarmDate = inputTime;
             while (!repeatDays.includes(nextAlarmDate.getDay()) || inputTime < now) {
                 nextAlarmDate.setDate(nextAlarmDate.getDate() + 1);
@@ -173,9 +238,17 @@ document.getElementById('edit-save-alarm').addEventListener('click', function ()
     } else{
         alert("请输入有效时间");
     }
-
 })
 
+document.getElementById('delete-alarm').addEventListener('click', function (){
+    const listItem = document.querySelector(`ul.alarmList li[data-index="${now_alarm_index}"]`);
+    delete alarms[now_alarm_index];
+    // 更新本地存储中的数据
+    localStorage.setItem('alarms', JSON.stringify(alarms));
+
+    listItem.remove();
+    document.getElementById('edit-alarm-dialog').style.display = 'none';
+})
 
 // ******************************* 重复对话框的设置 *******************************
 // 为复选框设置一个全局监听器
@@ -239,14 +312,15 @@ document.getElementById('repetition-dialog-return').addEventListener('click', fu
 // 检查闹钟是否应该响起
 function checkAlarms() {
     const now = new Date();
-    alarms.forEach(function(alarm) {
+    for (let key in alarms) {
+        let alarm = alarms[key];
         if (alarm.enabled && alarm.date <= now) {
             document.getElementById('alarmSound').play();
 
             if (alarm.repeat.length === 0) {
                 // 如果 repeatDays 长度为 0，则将 enabled 设置为 false
                 alarm.enabled = false;
-            } else {
+            } else{
                 // 根据 repeatDays 中的内容寻找下一次闹钟的重复日期并修改 date 的值
                 let nextAlarmDate = alarm.date;
                 while (!alarm.repeat.includes(nextAlarmDate.getDay())) {
@@ -255,7 +329,7 @@ function checkAlarms() {
                 alarm.date = nextAlarmDate;
             }
         }
-    });
+    }
 }
 
 
