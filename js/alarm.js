@@ -157,38 +157,47 @@ document.getElementById('saveAlarm').addEventListener('click', function() {
 
 // ******************************* 编辑闹钟对话框的相关函数 *******************************
 // 为 ul 元素添加了一个点击事件的监听器。当用户点击 ul 元素内的任何子元素时，事件会冒泡到 ul 元素，然后我们可以通过 event.target 获取到实际被点击的元素
-document.getElementById('alarmList').addEventListener('click', function(event) {
-    const target = event.target;
+const ulElement = document.getElementById('alarmList')
+ulElement.addEventListener('click', function(event) {
+    let target = event.target;
 
-    // 通过 target 获取 data-index 属性值
-    const dataIndex = target.getAttribute('data-index');
-    console.log(dataIndex)
-    console.log(alarms)
-    // 将值传给全局变量，表示当前只在访问的闹钟的下标
-    now_alarm_index = dataIndex;
-    // 根据 data-index 获取对应的闹钟信息
-    const alarm = alarms[dataIndex];
-    console.log(alarm);
+    // 逐级向上检查点击的元素是否是 li 元素或其父元素
+    while (target && target !== ulElement) {
+        if (target.tagName === 'LI') {
+            // 通过 target 获取 data-index 属性值
+            const dataIndex = target.getAttribute('data-index');
+            console.log(dataIndex)
+            console.log(alarms)
+            // 将值传给全局变量，表示当前只在访问的闹钟的下标
+            now_alarm_index = dataIndex;
+            // 根据 data-index 获取对应的闹钟信息
+            const alarm = alarms[dataIndex];
+            console.log(alarm);
 
-    // 复现闹钟信息至闹钟编辑对话框中
-    const alarmTime = document.getElementById('edit-alarmTime')
-    alarmTime.value = alarm.date.getHours().toString().padStart(2, '0') + ":" + alarm.date.getMinutes().toString().padStart(2, '0');
+            // 复现闹钟信息至闹钟编辑对话框中
+            const alarmTime = document.getElementById('edit-alarmTime')
+            alarmTime.value = alarm.date.getHours().toString().padStart(2, '0') + ":" + alarm.date.getMinutes().toString().padStart(2, '0');
 
-    const repetitionResult = document.getElementById('edit-repetition-result');
-    repeatDays = alarm.repeat;
-    if (repeatDays.length === 0) {
-        repetitionResult.innerHTML = '永不';
-    } else if (repeatDays.length === 7){
-        repetitionResult.innerHTML = '每天';
-    } else{
-        const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-        const sortedDays = repeatDays.sort((a, b) => a - b);
-        repetitionResult.innerHTML = sortedDays.map(day => weekdays[day]).join('、');
+            const repetitionResult = document.getElementById('edit-repetition-result');
+            repeatDays = alarm.repeat;
+            if (repeatDays.length === 0) {
+                repetitionResult.innerHTML = '永不';
+            } else if (repeatDays.length === 7){
+                repetitionResult.innerHTML = '每天';
+            } else{
+                const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+                const sortedDays = repeatDays.sort((a, b) => a - b);
+                repetitionResult.innerHTML = sortedDays.map(day => weekdays[day]).join('、');
+            }
+
+            const labelResult = document.getElementById('edit-select-label-result');
+            labelResult.value = alarm.label;
+            document.getElementById('edit-alarm-dialog').style.display = 'flex';
+            return; // 结束循环
+        }
+        target = target.parentNode; // 继续向上查找父元素
     }
 
-    const labelResult = document.getElementById('edit-select-label-result');
-    labelResult.value = alarm.label;
-    document.getElementById('edit-alarm-dialog').style.display = 'flex';
 });
 
 document.getElementById('edit-alarm-dialog-return').addEventListener('click', function () {
@@ -231,6 +240,8 @@ document.getElementById('edit-save-alarm').addEventListener('click', function ()
         alarmDetail.textContent = labelResult.value + '，' + repetitionResult.innerText;
         prevDiv.appendChild(hourMinuteText);
         prevDiv.appendChild(alarmDetail);
+
+        localStorage.setItem('alarms', JSON.stringify(alarms));
 
         // // 退出并复原
         document.getElementById('edit-alarm-dialog').style.display = 'none';
